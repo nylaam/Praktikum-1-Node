@@ -1,0 +1,1 @@
+console.log("XI RPL 1 hari ini belajar node");
