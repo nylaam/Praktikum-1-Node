@@ -208,47 +208,48 @@ app.post("/hexadesimal", (req,res) => {
 app.listen(8080,() => {
     console.log("Server run on port 8080");
 })
-app.post("/bmi", (req,res) => {
-    let berat = Number(req.body.berat)
-    let tinggi = Number(req.body.tinggi)
-    let bmi = berat / (tinggi * tinggi)
-    let status = ''
+//no 4
+//kategori
+// <18.5 = kekurangan berat badan
+// 18.5-24.9 = normal (ideal)
+// 25.0-29.9 = (kelebihan berat badan)
+// >= 30.0 = kegemukan(obesitas)
 
-    //objek yang berisi data yang akan diresponse
-    if (bmi < 18.5){
-        status = "Kekurangan berat badan"
-    }
-    else if (bmi >= 18.5 && bmi < 25){
-        status = 'Normal'
-    }
-    else if (bmi >= 25 && bmi < 30){
-        status = 'Berat badan berlebih'
-    }
-    else if (bmi >= 30){
-        status = "Kegemukan (obesitas)"
+app.post("/bmi", (req,res) => {
+    let bb = req.body.bb
+    let tb = req.body.tb
+    let bmi = (bb/(tb**2))*10000
+    let status = ''
+    if (bmi<18.5) {
+        status= "Kekurangan berat badan"
+    } else if(bmi>=18.5&&bmi<=24.9){
+        status= "Normal (Ideal)"
+    } else if(bmi>=25.0&&bmi<=29.9){
+        status= "Kelebihan berat badan"
+    } else if(bmi>=30.0){
+        status= "Kegemukan (Obesitas)"
     }
     let response = {
-        berat: berat,
-        tinggi: tinggi,
-        bmi: bmi,
-        status: status
+        Berat: bb+' kg',
+        Tinggi: tb+' cm',
+        BMI: bmi,
+        Status: status
     }
     res.json(response)
 })
 //no 5 
 app.post("/ganjilgenap", (req,res) => {
-    let nilai = Number (req.body.angka)
-    let angka=''    
+    let angka = Number (req.body.angka)
    
-let status = ''
-    if (nilai%2==0) {
-        status= "genap"
-    } else if(nilai%2==1){
-        status= "ganjil"
-    } 
-    let response = {
-        Angka:angka,
-        status:status 
-    }
-    res.json(response)
+    let status = ''
+        if (angka%2==0) {
+            status= 'genap'
+        } else if(angka%2==1){
+            status= 'ganjil'
+        } 
+        let response = {
+            Angka:angka,
+            status:status 
+        }
+        res.json(response)
 })
